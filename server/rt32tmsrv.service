@@ -1,0 +1,24 @@
+[Unit]
+Description=RT32 control system UT1 time distribution server
+Wants=network-online.target
+
+[Service]
+User=rt32time
+# The configuration file application.properties should be here:
+
+#change this to your workspace
+WorkingDirectory=/home/rt32time
+
+#path to executable. 
+#executable is a bash script which calls jar fileExecStart=/home/ubuntu/workspace/my-webapp
+#ExecStart=/usr/bin/docker run -p 192.168.1.8:33001:33001 --network host rt32tmsrv:0.1.1
+ExecStart=/usr/bin/docker container restart rt32tmsrv-run
+#Requires=ntpdate
+
+SuccessExitStatus=143
+TimeoutStopSec=5
+Restart=on-failure
+#Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target

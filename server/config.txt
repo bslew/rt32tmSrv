@@ -1,0 +1,71 @@
+#####################################################
+# TCP server
+#
+
+# TCP server interface
+#host=192.168.1.170
+#host=192.168.1.8
+host=127.0.0.1
+#host=172.17.0.1
+
+# TCP server port
+port=33001
+
+# maximal number of characters for TCP command
+cmd-max-length=100
+
+#####################################################
+# UDP emitter
+#
+
+# Multiple hosts addresses and ports must be separated 
+# by comma ','. Each host address is matched with port
+# number. If the number of specified ports is smaller
+# than the number of specified IP addresses then
+# ports are chosen modulo number of specified number of
+# ports.
+
+# destination host/port for UDP time stamp datagrams
+# config for RT32
+#tmspUDPhost=192.168.1.4
+
+#config for local tests
+#tmspUDPhost=127.0.0.1
+
+# config for docker tests
+#tmspUDPhost=172.17.0.1
+
+# multiple recipients case
+tmspUDPhost=127.0.0.1,192.168.1.170,192.168.1.4
+
+tmspUDPport=33033
+
+# delay between subsequent UDP datagrams [ms]
+# this value may be overriden by server state parameters
+tmsp-delay=100
+
+#####################################################
+# updater (this section is not yet implemented)
+#
+
+# source of dUT1 offsets and polar angles
+#CDDIS_addr=ftp://cddis.gsfc.nasa.gov/pub/products/iers/mark3.out
+
+# source for TAI-UTC time offset
+#CDDIS_TAI_UTC_addr=ftp://cddis.gsfc.nasa.gov/pub/products/iers/tai-utc.dat
+
+# frequency of auto-update [days]
+# update command is run automatically whenever this count of days 
+# has elapsed since the last update attempt
+#update_every=7
+
+#####################################################
+# general
+#
+
+# log and console verbosity level
+verbosity=10
+
+# server data state file name
+status-file=rt32tmsrv-state.yaml
+
