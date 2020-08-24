@@ -4,6 +4,12 @@
  *  Project: rt32tmSrv
  *  Created on: Jul 28, 2020 11:48:39 AM
  *  Author: blew
+ *  
+ *  
+ *  TODO: 	add docker volumes to keep logs, config and state files
+ *  		on docker host and not inside container. This will ease
+ *  		server updates.
+ *  
  */
 
 #include <stdlib.h>
