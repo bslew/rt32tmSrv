@@ -64,7 +64,7 @@ tmsp-delay=100
 #
 
 # log and console verbosity level
-verbosity=10
+verbosity=2
 
 # server data state file name
 status-file=rt32tmsrv-state.yaml

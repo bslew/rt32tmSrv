@@ -128,7 +128,7 @@ void send_(tcp::socket & socket, const string& message) {
 					auto [msg, err]=read_msg(sock,max_length);
 					if (err==boost::asio::error::eof) break;  // Connection closed cleanly by peer.
 					//				if (err==boost::asio::error::eof) return;  // Connection closed cleanly by peer.
-					_logger->debug("{}: received: '{}' from {}",
+					_logger->info("{}: received: '{}' from {}",
 							rt32::thread_id2str(std::this_thread::get_id()),
 							msg, sock.remote_endpoint().address().to_string());
 					
@@ -148,9 +148,17 @@ void send_(tcp::socket & socket, const string& message) {
 					send_msg(sock,reply+"\n");
 					
 					// log server reply
-					_logger->debug("{} reply: {}",
-							rt32::thread_id2str(std::this_thread::get_id()),
-							reply);
+					if (cmd==TCPcommand::cmd_data) {
+						_logger->trace("{} reply: {}",
+								rt32::thread_id2str(std::this_thread::get_id()),
+								reply);						
+						
+					}
+					else {
+						_logger->debug("{} reply: {}",
+								rt32::thread_id2str(std::this_thread::get_id()),
+								reply);						
+					}
 					
 					// commands that require special treatment
 					if (cmd==TCPcommand::cmd_close)	{ sock.close(); break; }

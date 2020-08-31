@@ -5,6 +5,20 @@
  *  Created on: Jul 28, 2020 11:48:39 AM
  *  Author: blew
  *  
+ *  TODO:	There is a bug in logger usage causing 
+ *  		---
+ *  		[2020-08-28 09:14:56.858] [rt32tmsrv] [debug] 140077532698368: received: 'data' from 127.0.0.1
+ *  		[2020-08-28 09:14:56.858] [rt32tmsrv] [debug] 140077532698368 reply: astroTime=1,tmsp-delay=100,UT1=1598562259.703309,dUT1=-0.1,TAI_UTC=37,polarX=0,polarY=0,updated=1597926767
+ *  		[2020-08-28 09:14:56.878] [rt32tmsrv] [debug] 140077515912960: new connection from 127.0.0.1
+ *  		[2020-08-28 09:14:56.878] [rt32tmsrv] [debug] 140077515912960: received: 'stopAstroTime' from 127.0.0.1
+ *  		[*** LOG ERROR #0001 ***] [2020-08-28 09:14:56] [rt32tmsrv] {Unknown exception in logger}
+ *  		FATAL: exception not rethrown
+ *  		[2020-08-28 09:14:56.878] [rt32tmsrv] [info] Saving server state
+ *  		Aborted (core dumped)
+ *  		---
+ *  		on new command sent after waking up from suspend to ram.
+ *  		
+ *  
  *  
  *  TODO: 	add docker volumes to keep logs, config and state files
  *  		on docker host and not inside container. This will ease
@@ -29,8 +43,8 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "../server/tcp_communication.h"
-#include "../server/UDPemitter.h"
+#include "tcp_communication.h"
+#include "UDPemitter.h"
 
 #define PARAMETER_FILE "config.txt"
 
@@ -301,6 +315,12 @@ spdlog::logger getLogger(int verbosity) {
 		logger.sinks()[0]->set_level(spdlog::level::debug);
 		logger.sinks()[1]->set_level(spdlog::level::debug);
 		logger.set_level(spdlog::level::debug);
+	}
+	if (verbosity>10) {
+//		cout << "setting verbosity " << opt["verbosity"].as<int>() << "\n";
+		logger.sinks()[0]->set_level(spdlog::level::trace);
+		logger.sinks()[1]->set_level(spdlog::level::trace);
+		logger.set_level(spdlog::level::trace);
 	}
 
     return logger;

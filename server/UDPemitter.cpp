@@ -73,7 +73,7 @@ namespace rt32 {
 					_mtx.lock();
 					sleep_time=double(_srvmemo["state"]["tmsp-delay"].as<int>())*1000;
 					_mtx.unlock();
-					if (_opt["verbosity"].as<int>()>10) {
+					if (_opt["verbosity"].as<int>()>20) {
 						std::cout << "Emitter sleeps\n";
 					}
 					usleep(long(sleep_time));
