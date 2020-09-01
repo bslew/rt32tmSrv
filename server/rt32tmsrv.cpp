@@ -5,6 +5,10 @@
  *  Created on: Jul 28, 2020 11:48:39 AM
  *  Author: blew
  *  
+ *  TODO:	log every n'th (e.g. 100th) 'data' command for a given session to reduce the size of logs
+ *  		or add log rotate stuff
+ *  
+ *  
  *  TODO:	There is a bug in logger usage causing 
  *  		---
  *  		[2020-08-28 09:14:56.858] [rt32tmsrv] [debug] 140077532698368: received: 'data' from 127.0.0.1
