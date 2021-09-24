@@ -27,7 +27,8 @@ Libraries required:
 cmake . && make
 ```
 
-#AUTHOR
+# Author
+
 Bartosz Lew [<bartosz.lew@protonmail.com>](bartosz.lew@protonmail.com)
 
 
