@@ -122,15 +122,44 @@ void send_(tcp::socket & socket, const string& message) {
 			_logger->debug("{}: new connection from {}",
 					rt32::thread_id2str(std::this_thread::get_id()),
 					sock.remote_endpoint().address().to_string());
+			
+			std::string last_msg="";
+			long last_msg_repeat_times=0;
+			long log_same_msg_every=1000;
+			_srvmemo_mtx.lock();
+			log_same_msg_every=_opt["log_same_msg_every"].as<long>();
+			_srvmemo_mtx.unlock();
+			
 			try	{
 				for (;;) {
 					// read command from socket
 					auto [msg, err]=read_msg(sock,max_length);
 					if (err==boost::asio::error::eof) break;  // Connection closed cleanly by peer.
 					//				if (err==boost::asio::error::eof) return;  // Connection closed cleanly by peer.
-					_logger->info("{}: received: '{}' from {}",
-							rt32::thread_id2str(std::this_thread::get_id()),
-							msg, sock.remote_endpoint().address().to_string());
+					
+					std::string log_comment="";
+					bool log_msg=true;
+					if (msg==last_msg) {
+						last_msg_repeat_times++;
+						if (last_msg_repeat_times%log_same_msg_every==0) {
+							log_msg=true;
+							std::stringstream ss;
+							ss << "(repeated " << log_same_msg_every << " times)";
+							log_comment=ss.str();
+							last_msg_repeat_times=0;
+						}
+						else log_msg=false;
+					}
+					else {
+						last_msg=msg;						
+					}
+					
+					if (log_msg) {
+						_logger->info("{}: received: '{}' {} from {}",
+								rt32::thread_id2str(std::this_thread::get_id()),
+								msg, log_comment,
+								sock.remote_endpoint().address().to_string());
+					}
 					
 					
 					// process TCP request - parse incoming command

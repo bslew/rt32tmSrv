@@ -44,7 +44,7 @@ set (LIBRARIES_ALL
 	boost_system
 	pthread
 	rt32tmsrv_comm
-    ${yaml_LIB}
+	${yaml_LIB}
 #	${exiv2_LIB}
 #	OpenMP::OpenMP_CXX
 	)

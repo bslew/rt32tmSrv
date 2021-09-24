@@ -4,10 +4,12 @@
 #RUN apt install libglvnd0
 
 FROM fedora:26
+#RUN dnf -v clean all
 #RUN dnf -y install python3-pip-9.0.3-2.fc26.noarch python3 python3-mysql.x86_64 
 #RUN dnf -y clean all
 #RUN dnf -y -v update --releasever=26
 RUN dnf -y install libstdc++-7.3.1-2.fc26.x86_64 
+#RUN dnf -y install python3-pip
 
 # for command line parser and TCP/IP
 RUN dnf -y install boost-system boost-program-options boost-filesystem

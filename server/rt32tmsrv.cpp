@@ -189,7 +189,8 @@ boost::program_options::variables_map parseOptions(int argc, char** argv) {
 		    		"Server data and status file.")
 //		    ("show", po::value<bool>(&boolopt)->default_value(false), "shows the loaded image")
 //			
-//		    ("hmin", po::value<double>(&dbl)->default_value(0), "Minimal elevation threshold.")
+		    ("log_same_msg_every", po::value<long>()->default_value(1000), "If TCP server"
+		    		"receives the same command, log only every this occurance.")
 			;
 
         // Hidden options, will be allowed both on command line and
